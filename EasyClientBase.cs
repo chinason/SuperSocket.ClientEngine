@@ -272,8 +272,7 @@ namespace SuperSocket.ClientEngine
 
             if (Interlocked.CompareExchange(ref m_ConnectTaskSource, null, connectTaskSource) == connectTaskSource)
             {
-                connectTaskSource.SetResult(result);
-                return true;
+                return connectTaskSource.TrySetResult(result);
             }
 
             return false;
@@ -319,7 +318,7 @@ namespace SuperSocket.ClientEngine
             {
                 if(Interlocked.CompareExchange(ref m_CloseTaskSource, null, closeTaskSrc) == closeTaskSrc)
                 {
-                    closeTaskSrc.SetResult(true);
+                    closeTaskSrc.TrySetResult(true);
                 }
             }
 
